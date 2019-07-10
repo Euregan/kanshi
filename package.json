@@ -1,6 +1,6 @@
 {
   "name": "kanshi",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "dependencies": {
@@ -11,8 +11,9 @@
     "nodemon": "^1.19.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "nodemon --watch src --ext elm --exec \"npx elm make --output public/js/app.js src/Main.elm --debug\"",
+    "serve": "http-server public"
   },
-  "author": "",
+  "author": "Valentin Manceaux-Panot",
   "license": "ISC"
 }

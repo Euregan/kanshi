@@ -1,0 +1,18 @@
+{
+    "standalones": [
+        {
+            "id": "website",
+            "name": "Main website"
+        },
+        {
+            "id": "blog",
+            "name": "Blog"
+        }
+    ],
+    "packages": [
+        {
+            "id": "login-form",
+            "name": "Login Form"
+        }
+    ]
+}

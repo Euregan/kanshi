@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="fr">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="/css/spectre.min.css">
+    <link rel="stylesheet" href="/css/spectre-exp.min.css">
+    <link rel="stylesheet" href="/css/spectre-icons.min.css">
+    <link rel="stylesheet" href="/css/app.css">
+    <title>Nexus</title>
+</head>
+<body>
+    <div id="app">
+        <script src="/js/app.js"></script>
+        <script>
+            var oReq = new XMLHttpRequest();
+            oReq.addEventListener("load", function reqListener () {
+                var app = Elm.Main.init({flags: {
+                    config: JSON.parse(this.responseText)
+                }})
+            })
+            oReq.open("GET", "/configuration.json")
+            oReq.send()
+        </script>
+    </div>
+</body>
+</html>
