@@ -3,3 +3,11 @@ elm: elm0.19.0
 node_js: '10'
 script:
   - npx elm make --output=dist/kanshi.js --optimize src/Main.elm
+deploy:
+  skip_cleanup: true
+  provider: npm
+  email: "$NPM_EMAIL"
+  api_key: "$NPM_TOKEN"
+  on:
+    tags: true
+    branch: master
