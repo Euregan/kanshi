@@ -1,0 +1,8 @@
+language: elm
+elm: elm0.19.0
+node_js: '10'
+install:
+  - npm install
+  - npx elm install
+script:
+  - npx elm make --output=dist/kanshi.js --optimize src/Main.elm
