@@ -15,5 +15,8 @@
     "serve": "http-server public"
   },
   "author": "Valentin Manceaux-Panot",
-  "license": "ISC"
+  "license": "ISC",
+  "publishConfig": {
+    "access": "public"
+  }
 }
