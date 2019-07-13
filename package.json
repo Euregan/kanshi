@@ -11,7 +11,8 @@
     "nodemon": "^1.19.1"
   },
   "scripts": {
-    "watch": "nodemon --watch src --ext elm --exec \"npx elm make --output public/js/app.js src/Main.elm --debug\"",
+    "make": "npx elm make --output public/js/app.js src/Main.elm --debug",
+    "watch": "nodemon --watch src --ext elm --exec \"npm run make\"",
     "serve": "http-server public"
   },
   "author": "Valentin Manceaux-Panot",
