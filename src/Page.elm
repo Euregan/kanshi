@@ -30,7 +30,7 @@ layout title content =
     , body =
       [ header [ class "navbar" ]
         [ section [ class "navbar-section" ]
-          [ a [ class "navbar-brand text-bold mr-2", Route.href Route.Root ] [ text "Kanshi" ]
+          [ a [ class "navbar-brand text-bold btn btn-link", Route.href Route.Root ] [ text "Kanshi" ]
           , a [ Route.href Route.Deployments, class "btn btn-link" ] [ text "Deployments" ]
           ]
         ]

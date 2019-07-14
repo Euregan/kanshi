@@ -23,6 +23,7 @@ body {
 
 #dashboard .applications ul.card-body {
   margin: 0;
+  padding-bottom: 1rem;
 }
 
 #deployments .card {
@@ -134,6 +135,11 @@ body {
   padding: 1rem;
 }
 
+.standalone-packages {
+  margin-left: 0;
+  margin-bottom: 0;
+}
+
 .standalone-packages li {
   display: flex;
   justify-content: space-between;
@@ -146,15 +152,39 @@ body {
 /* Overriding spectre's */
 
 header.navbar {
-  margin-bottom: 1rem;
+  margin-bottom: 1.1rem;
 }
 
-.card-body > ul, ul.card-body {
+header .navbar-section > .btn:first-child {
+  padding-left: 0;
+}
+
+.card {
+  border-radius: 0.16rem;
+}
+
+.card-title {
+    margin-bottom: 0.3rem;
+}
+
+.card-body h6 {
+  margin-top: 0.9rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.77rem;
+  text-transform: uppercase;
+}
+
+.card .card-body > ul, .card ul.card-body {
   margin: 0;
+  padding-top: .3rem;
 }
 
 ul > li:first-child {
   margin-top: 0;
+}
+
+.icon-cross, .icon-check, .icon-stop {
+  vertical-align: -2px;
 }
 
 .panel .panel-body {
