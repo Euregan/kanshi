@@ -13,19 +13,19 @@ relative time now =
     baseTime = posixToMillis now.now
   in
     if baseTime - displayTime < 60000 then -- Less than a minute
-      (String.fromInt ((baseTime - displayTime) // 1000)) ++ " seconds" ++ (pluralize ((baseTime - displayTime) // 1000)) ++ " ago"
+      (String.fromInt ((baseTime - displayTime) // 1000)) ++ " second" ++ (pluralize ((baseTime - displayTime) // 1000)) ++ " ago"
     else if baseTime - displayTime < 3600000 then -- Less than an hour
-      (String.fromInt ((baseTime - displayTime) // 60000)) ++ " minutes" ++ (pluralize ((baseTime - displayTime) // 60000)) ++ " ago"
+      (String.fromInt ((baseTime - displayTime) // 60000)) ++ " minute" ++ (pluralize ((baseTime - displayTime) // 60000)) ++ " ago"
     else if baseTime - displayTime < 86400000 then -- Less than a day
-      (String.fromInt ((baseTime - displayTime) // 3600000)) ++ " hours" ++ (pluralize ((baseTime - displayTime) // 3600000)) ++ " ago"
+      (String.fromInt ((baseTime - displayTime) // 3600000)) ++ " hour" ++ (pluralize ((baseTime - displayTime) // 3600000)) ++ " ago"
     else if baseTime - displayTime < 604800000 then -- Less than a week
-      (String.fromInt ((baseTime - displayTime) // 86400000)) ++ " days" ++ (pluralize ((baseTime - displayTime) // 86400000)) ++ " ago"
+      (String.fromInt ((baseTime - displayTime) // 86400000)) ++ " day" ++ (pluralize ((baseTime - displayTime) // 86400000)) ++ " ago"
     else if baseTime - displayTime < 2592000000 then -- Less than a month
-      (String.fromInt ((baseTime - displayTime) // 604800000)) ++ " weeks" ++ (pluralize ((baseTime - displayTime) // 604800000)) ++ " ago"
+      (String.fromInt ((baseTime - displayTime) // 604800000)) ++ " week" ++ (pluralize ((baseTime - displayTime) // 604800000)) ++ " ago"
     else if baseTime - displayTime < 31536000000 then -- Less than a year
-      (String.fromInt ((baseTime - displayTime) // 2592000000)) ++ " months" ++ " ago"
+      (String.fromInt ((baseTime - displayTime) // 2592000000)) ++ " month" ++ " ago"
     else
-      (String.fromInt ((baseTime - displayTime) // 31536000000)) ++ " years" ++ (pluralize ((baseTime - displayTime) // 31536000000)) ++ " ago"
+      (String.fromInt ((baseTime - displayTime) // 31536000000)) ++ " year" ++ (pluralize ((baseTime - displayTime) // 31536000000)) ++ " ago"
 
 absolute : Zone -> Posix -> String
 absolute zone time =
