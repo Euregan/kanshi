@@ -4,21 +4,16 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "cssnano-brunch": "^1.2.0",
     "elm": "^0.19.0-no-deps"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.5.4",
-    "babel-brunch": "^7.0.1",
-    "brunch": "^2.10.17",
     "http-server": "^0.11.1",
-    "nodemon": "^1.19.1",
-    "terser-brunch": "^3.0.0"
+    "nodemon": "^1.19.1"
   },
   "scripts": {
-    "build": "elm make --output src/main.js src/Main.elm --optimize && brunch build && rm src/main.js",
     "build:dev": "elm make --output public/js/app.js src/Main.elm --debug",
-    "watch": "nodemon --watch src --ext elm --exec \"npm run make\"",
+    "watch": "nodemon --watch src --ext elm --exec \"npm run build:dev\"",
     "serve": "http-server public"
   },
   "author": "Valentin Manceaux-Panot",
