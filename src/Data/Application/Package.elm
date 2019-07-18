@@ -1,6 +1,6 @@
 module Data.Application.Package exposing (Package, decoder)
 
-import Json.Decode as Decode exposing (field, string, list)
+import Json.Decode as Decode exposing (field, string, list, nullable)
 import Data.Build as Build exposing (Build)
 import Data.Deployment as Deployment exposing (Deployment)
 
@@ -18,7 +18,7 @@ decoder : Decode.Decoder Package
 decoder =
   Decode.map6 Package
     (field "id" string)
-    (field "publicationName" string)
+    (field "publicationName" (nullable string |> Decode.map (Maybe.withDefault "")))
     (field "name" string)
     (field "versions" (list string))
     (field "builds" (list Build.decoder))
