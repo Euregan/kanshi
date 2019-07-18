@@ -1,6 +1,6 @@
 module Data.Application.Standalone exposing (Standalone, decoder)
 
-import Json.Decode as Decode exposing (field, string, list, int, dict)
+import Json.Decode as Decode exposing (field, string, list, int, dict, nullable)
 import Dict exposing (Dict)
 import Data.Build as Build exposing (Build)
 import Data.Deployment as Deployment exposing (Deployment)
@@ -22,5 +22,5 @@ decoder =
     (field "name" string)
     (field "builds" (list Build.decoder))
     (field "deployments" (list Deployment.decoder))
-    (field "calendar" (list int))
+    (field "calendar" (nullable (list int)) |> Decode.map (Maybe.withDefault []))
     (field "packages" (dict string))
