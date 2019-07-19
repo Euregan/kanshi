@@ -3,6 +3,7 @@ elm: elm0.19.0
 node_js: '10'
 script:
   - npx elm make --output=dist/kanshi.js --optimize src/Main.elm
+  - mkdir -p dist/css && cp -R public/css dist/css
 deploy:
   skip_cleanup: true
   provider: npm
