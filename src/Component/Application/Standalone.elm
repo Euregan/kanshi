@@ -46,7 +46,6 @@ summary time packages standalone =
     filteredPackages =
       Dict.toList standalone.packages |>
         List.filter (\(package, _) -> List.member package packageIdentifiers) |>
-        List.map (\(package, version) -> (package, Dependency.fromString version)) |>
         List.map (\(package, dependency) -> (package, dependency,
           findPackage package |>
           Maybe.andThen (\pack -> List.head pack.versions) |>

@@ -4,6 +4,7 @@ import Json.Decode as Decode exposing (field, string, list, int, dict, nullable)
 import Dict exposing (Dict)
 import Data.Build as Build exposing (Build)
 import Data.Deployment as Deployment exposing (Deployment)
+import Data.Dependency as Dependency exposing (Dependency)
 
 
 type alias Standalone =
@@ -12,7 +13,7 @@ type alias Standalone =
   , builds : List Build
   , deployments : List Deployment
   , calendar : List Int
-  , packages : Dict String String
+  , packages : Dict String Dependency
   }
 
 decoder : Decode.Decoder Standalone
@@ -23,4 +24,4 @@ decoder =
     (field "builds" (list Build.decoder))
     (field "deployments" (list Deployment.decoder))
     (field "calendar" (nullable (list int)) |> Decode.map (Maybe.withDefault []))
-    (field "packages" (dict string))
+    (field "packages" (dict string |> Decode.map (Dict.map (\_ raw -> Dependency.fromString raw))))
