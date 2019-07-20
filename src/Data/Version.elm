@@ -1,7 +1,22 @@
-module Data.Version exposing (Version, fromString, incrementMajor, incrementMinor, incrementBugfix, decrementMajor, decrementMinor, decrementBugfix, dropMinor, dropBugfix, compare)
+module Data.Version exposing (Version, decoder, fromString, toString, incrementMajor, incrementMinor, incrementBugfix, decrementMajor, decrementMinor, decrementBugfix, dropMinor, dropBugfix, compare)
+
+import Json.Decode as Decode exposing (Decoder)
 
 
 type alias Version = (Int, Int, Int)
+
+decoder : Decoder Version
+decoder =
+  let
+    toDecoder : Maybe Version -> Decoder Version
+    toDecoder maybeVersion =
+      case maybeVersion of
+        Just version -> Decode.succeed version
+        Nothing -> Decode.fail "Version cannot be parsed"
+  in
+    Decode.string
+      |> Decode.map fromString
+      |> Decode.andThen toDecoder
 
 fromString : String -> Maybe Version
 fromString raw =
@@ -10,6 +25,10 @@ fromString raw =
       (Just major, Just minor, Just bugfix) -> Just (major, minor, bugfix)
       _ -> Nothing
     _ -> Nothing
+
+toString : Version -> String
+toString (major, minor, patch) =
+  (String.fromInt major) ++ "." ++ (String.fromInt minor) ++ "." ++ (String.fromInt patch)
 
 compare : Version -> Version -> Order
 compare (majorA, minorA, bugfixA) (majorB, minorB, bugfixB) =

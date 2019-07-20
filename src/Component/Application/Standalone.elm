@@ -13,6 +13,7 @@ import Component.Build as Build
 import Component.Deployment as Deployment
 import Component.Application as Application
 import Component.Time as Time
+import Component.Dependency as Dependency
 import Route
 import Data.Time exposing (Time, yesterday, weekdayNumber)
 import Time exposing (Posix, posixToMillis, millisToPosix)
@@ -45,14 +46,11 @@ summary time packages standalone =
         List.head
     filteredPackages =
       Dict.toList standalone.packages |>
-        List.filter (\(package, _) -> List.member package packageIdentifiers) |>
-        List.map (\(package, dependency) -> (package, dependency,
-          findPackage package |>
-          Maybe.andThen (\pack -> List.head pack.versions) |>
-          Maybe.andThen Version.fromString |>
-          Maybe.map (Dependency.matches dependency) |>
-          Maybe.withDefault False
-        ))
+        List.foldl (\(package, dependency) acc ->
+          case findPackage package |> Maybe.andThen (\pack -> List.head pack.versions) |> Maybe.andThen Version.fromString of
+            Nothing -> acc
+            Just version -> (package, version, dependency) :: acc
+          ) []
   in
     [ li [] [ Application.build (List.head standalone.builds) time ]
     , li [] [ Application.deployment (List.head standalone.deployments) time ]
@@ -61,7 +59,7 @@ summary time packages standalone =
         []
       else
         [ h6 [] [ text "Packages" ]
-        , ul [ class "standalone-packages" ] <| List.map (\(package, version, matches) -> li [] [ span [] [ text package ], span [ class (if matches then "text-gray" else "text-error")] [ text version.raw ] ] ) filteredPackages
+        , ul [ class "standalone-packages" ] <| List.map (\(package, version, dependency) -> Dependency.item False package version dependency) filteredPackages
         ])
     ]
 

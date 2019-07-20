@@ -624,7 +624,7 @@
         1
     ],
     "packages":{
-        "@swag/login-form": "1.2.9"
+        "@swag/login-form": ["1.2.9", "1.2.9"]
     },
     "type":"stand-alone"
 }

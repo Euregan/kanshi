@@ -1,5 +1,6 @@
-module Data.Dependency exposing (Dependency, matches, fromString)
+module Data.Dependency exposing (Dependency, decoder, matches, fromString)
 
+import Json.Decode as Decode exposing (Decoder)
 import Data.Version as Version exposing (Version)
 
 
@@ -23,6 +24,11 @@ matches dependency version =
         (_, Just maximum) -> Version.compare maximum version == GT
         _ -> True
       ) False dependency.constraints
+
+decoder : Decoder Dependency
+decoder =
+  Decode.string |> Decode.map fromString
+
 
 fromString : String -> Dependency
 fromString raw =
