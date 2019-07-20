@@ -18,9 +18,9 @@ matches dependency version =
   case dependency.constraints of
     [] -> True
     _ -> List.foldr (\constraint acc -> acc || case (constraint.minimum, constraint.maximum) of
-        (Just minimum, Just maximum) -> (Version.compare version minimum == LT || Version.compare version minimum == EQ) && Version.compare version maximum == GT
-        (Just minimum, _) -> Version.compare version minimum == LT || Version.compare version minimum == EQ
-        (_, Just maximum) -> Version.compare version maximum == GT
+        (Just minimum, Just maximum) -> (Version.compare minimum version == LT || Version.compare minimum version == EQ) && Version.compare maximum version == GT
+        (Just minimum, _) -> Version.compare minimum version == LT || Version.compare minimum version == EQ
+        (_, Just maximum) -> Version.compare maximum version == GT
         _ -> True
       ) False dependency.constraints
 
