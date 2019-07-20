@@ -6,6 +6,17 @@ body {
   margin: 0.8rem;
 }
 
+.navbar-brand {
+  display: flex;
+}
+
+.navbar-brand svg {
+  height: 1.2rem;
+  margin-right: 0.4rem;
+  stroke: #5755d9;
+  stroke-width: 8;
+}
+
 #content > * {
   margin: 0;
 }

@@ -9,6 +9,7 @@ import Data.Resource exposing (Resource)
 import Data.Config.Application exposing (Application)
 import Data.Application.Package exposing (Package)
 import Data.Application.Standalone exposing (Standalone)
+import Component.Logo as Logo
 
 
 type Page
@@ -30,7 +31,7 @@ layout title content =
     , body =
       [ header [ class "navbar" ]
         [ section [ class "navbar-section" ]
-          [ a [ class "navbar-brand text-bold btn btn-link", Route.href Route.Root ] [ text "Kanshi" ]
+          [ a [ class "navbar-brand text-bold btn btn-link", Route.href Route.Root ] [ Logo.display, text "Kanshi" ]
           , a [ Route.href Route.Deployments, class "btn btn-link" ] [ text "Deployments" ]
           ]
         ]
