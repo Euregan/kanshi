@@ -5,3 +5,4 @@ type TaskStatus
   = Failed
   | Succeeded
   | Running
+  | Canceled

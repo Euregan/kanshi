@@ -160,6 +160,33 @@ body {
   margin-left: 1rem;
 }
 
+.navbar-brand svg path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: dash 1.5s linear forwards;
+}
+
+.icon-building svg {
+  stroke: #5755d9;
+  stroke-width: 8;
+}
+
+.icon.icon-building {
+  text-indent: 0;
+}
+
+.icon-building svg path {
+  stroke-dasharray: 200%;
+  stroke-dashoffset: 400%;
+  animation: dash 2.25s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 /* Overriding spectre's */
 
 header.navbar {

@@ -7,6 +7,10 @@
         {
             "id": "blog",
             "name": "Blog"
+        },
+        {
+            "id": "customer-service",
+            "name": "Customer Service"
         }
     ],
     "packages": [

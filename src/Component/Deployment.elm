@@ -14,6 +14,7 @@ status deployment time =
   Status.inline
     ("Failed " ++ (Time.relative deployment.date time), [ title (Time.absolute time.zone deployment.date) ])
     ("Deployed " ++ (Time.relative deployment.date time), [ title (Time.absolute time.zone deployment.date) ])
+    ("Canceled " ++ (Time.relative deployment.date time), [ title (Time.absolute time.zone deployment.date) ])
     ("A deployment is running", [])
     deployment.state
 
@@ -45,6 +46,7 @@ item deployment time =
         Failed -> text "The deployment failed"
         Succeeded -> text "The deployment succeeded"
         Running -> text "The deployment is running"
+        Canceled -> text "The deployment has been canceled"
     deploymentStatus =
       case deployment.url of
         Nothing -> span [] [ description ]

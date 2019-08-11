@@ -9,7 +9,7 @@ import Data.Time exposing (Time)
 
 status : Build -> Time -> Html msg
 status build time =
-  Status.inline ("The last build failed", []) ("The last build succeeded", []) ("A build is running", []) build.state
+  Status.inline ("The last build failed", []) ("The last build succeeded", []) ("The last build was canceled", []) ("A build is running", []) build.state
 
 card : List Build -> Time -> Html msg
 card builds time =
@@ -41,5 +41,5 @@ item build =
     number = "#" ++ (String.fromInt build.number) ++ " "
   in
     a [ href (Maybe.withDefault "" build.url), target "_blank" ]
-      [ Status.inline (number ++ "The build failed", []) (number ++ "The build succeeded", []) (number ++ "The build is running", []) build.state
+      [ Status.inline (number ++ "The build failed", []) (number ++ "The build succeeded", []) (number ++"The build was canceled", []) (number ++ "The build is running", []) build.state
       ]

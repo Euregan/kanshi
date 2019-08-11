@@ -19,7 +19,8 @@ stateDecoder =
         "Successful" -> Decode.succeed Succeeded
         "Failed" -> Decode.succeed Failed
         "InProgress" -> Decode.succeed Running
-        somethingElse -> Decode.fail <| "État de build inconnu: " ++ somethingElse
+        "Canceled" -> Decode.succeed Canceled
+        somethingElse -> Decode.fail <| "Unkown build state: " ++ somethingElse
     )
 
 decoder : Decode.Decoder Build

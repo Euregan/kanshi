@@ -4,7 +4,7 @@
     "builds":[
         {
             "id":"25",
-            "state":"InProgress",
+            "state":"Canceled",
             "number":25,
             "url":null
         },
@@ -624,7 +624,6 @@
         1
     ],
     "packages":{
-        "@swag/login-form": ["1.2.9", "1.2.9"]
-    },
-    "type":"stand-alone"
+        "@swag/login-form": ["1.3.9", "^1.0.0"]
+    }
 }
