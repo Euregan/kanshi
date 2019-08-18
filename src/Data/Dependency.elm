@@ -38,28 +38,28 @@ fromString raw =
         [] -> Nothing
         [major] -> Version.fromString <| major ++ ".0.0"
         [major, minor] -> Version.fromString <| major ++ "." ++ minor ++ ".0"
-        [major, minor, bugfix] -> Version.fromString <| major ++ "." ++ minor ++ "." ++ bugfix
-        major::minor::bugfix::_ -> Version.fromString <| major ++ "." ++ minor ++ "." ++ bugfix
+        [major, minor, patch] -> Version.fromString <| major ++ "." ++ minor ++ "." ++ patch
+        major::minor::patch::_ -> Version.fromString <| major ++ "." ++ minor ++ "." ++ patch
     increment rawDependency version =
       case String.split "." rawDependency of
         [] -> version
         [major] -> Version.incrementMajor version
         [major, minor] -> Version.incrementMinor version
-        [major, minor, bugfix] -> Version.incrementBugfix version
-        major::minor::bugfix::_ -> Version.incrementBugfix version
+        [major, minor, patch] -> Version.incrementPatch version
+        major::minor::patch::_ -> Version.incrementPatch version
     decrement rawDependency version =
       case String.split "." rawDependency of
         [] -> version
         [major] -> Version.decrementMajor version
         [major, minor] -> Version.decrementMinor version
-        [major, minor, bugfix] -> Version.decrementBugfix version
-        major::minor::bugfix::_ -> Version.decrementBugfix version
+        [major, minor, patch] -> Version.decrementPatch version
+        major::minor::patch::_ -> Version.decrementPatch version
   in
     case String.left 1 raw of
       "~" ->
         Dependency raw [ Constraint (String.dropLeft 1 raw |> Version.fromString) Nothing ]
       "^" ->
-        Dependency raw [ Constraint (String.dropLeft 1 raw |> Version.fromString) (String.dropLeft 1 raw |> toVersion |> Maybe.map Version.incrementMajor |> Maybe.map Version.dropBugfix |> Maybe.map Version.dropMinor) ]
+        Dependency raw [ Constraint (String.dropLeft 1 raw |> Version.fromString) (String.dropLeft 1 raw |> toVersion |> Maybe.map Version.incrementMajor |> Maybe.map Version.dropPatch |> Maybe.map Version.dropMinor) ]
       ">" ->
         Dependency raw [ Constraint (String.dropLeft 1 raw |> toVersion |> Maybe.map (increment <| String.dropLeft 1 raw)) Nothing ]
       "<" ->

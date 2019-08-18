@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build:dev": "elm make --output public/js/app.js src/Main.elm --debug",
-    "watch": "nodemon --watch src --ext elm --exec \"npm run build:dev\"",
+    "watch": "nodemon --watch src --ext elm --exec \"clear && npm run build:dev\"",
     "serve": "http-server -c-1"
   },
   "author": "Valentin Manceaux-Panot",

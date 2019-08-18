@@ -1,9 +1,14 @@
-module Data.Version exposing (Version, decoder, fromString, toString, incrementMajor, incrementMinor, incrementBugfix, decrementMajor, decrementMinor, decrementBugfix, dropMinor, dropBugfix, compare)
+module Data.Version exposing (Version, decoder, fromString, toString, incrementMajor, incrementMinor, incrementPatch, decrementMajor, decrementMinor, decrementPatch, dropMinor, dropPatch, compare)
 
 import Json.Decode as Decode exposing (Decoder)
 
 
-type alias Version = (Int, Int, Int)
+type alias Version =
+  { major: Int
+  , minor: Int
+  , patch: Int
+  , modifier: Maybe String
+  }
 
 decoder : Decoder Version
 decoder =
@@ -20,54 +25,68 @@ decoder =
 
 fromString : String -> Maybe Version
 fromString raw =
-  case String.split "." raw of
-    [stringMajor, stringMinor, stringBugfix] -> case (String.toInt stringMajor, String.toInt stringMinor, String.toInt stringBugfix) of
-      (Just major, Just minor, Just bugfix) -> Just (major, minor, bugfix)
+  let
+    parsePatch rawPatch =
+      case String.split "-" rawPatch of
+        [patchVersion] -> String.toInt patchVersion |> Maybe.map (\patch -> (patch, Nothing))
+        [patchVersion, modifier] -> String.toInt patchVersion |> Maybe.map (\patch -> (patch, Just modifier))
+        _ -> Nothing
+  in
+    case String.split "." raw of
+      [stringMajor, stringMinor, stringPatch] ->
+        case (String.toInt stringMajor, String.toInt stringMinor, parsePatch stringPatch) of
+          (Just major, Just minor, Just (patch, modifier)) -> Just {major = major, minor = minor, patch = patch, modifier = modifier}
+          _ -> Nothing
       _ -> Nothing
-    _ -> Nothing
 
 toString : Version -> String
-toString (major, minor, patch) =
-  (String.fromInt major) ++ "." ++ (String.fromInt minor) ++ "." ++ (String.fromInt patch)
+toString {major, minor, patch, modifier} =
+  let
+    modifierString =
+      case modifier of
+        Just actualModifier -> "-" ++ actualModifier
+        Nothing -> ""
+  in
+    (String.join "." [String.fromInt major, String.fromInt minor, String.fromInt patch]) ++ modifierString
 
 compare : Version -> Version -> Order
-compare (majorA, minorA, bugfixA) (majorB, minorB, bugfixB) =
-  if majorA > majorB then GT
-  else if majorB > majorA then LT
-  else if minorA > minorB then GT
-  else if minorB > minorA then LT
-  else if bugfixA > bugfixB then GT
-  else if bugfixB > bugfixA then LT
+compare versionA versionB =
+  if versionA.major > versionB.major then GT
+  else if versionB.major > versionA.major then LT
+  else if versionA.minor > versionB.minor then GT
+  else if versionB.minor > versionA.minor then LT
+  else if versionA.patch > versionB.patch then GT
+  else if versionB.patch > versionA.patch then LT
   else EQ
 
 incrementMajor : Version -> Version
-incrementMajor (major, minor, bugfix) =
-  (major + 1, minor, bugfix)
+incrementMajor version =
+  { version | major = version.major + 1 }
 
 incrementMinor : Version -> Version
-incrementMinor (major, minor, bugfix) =
-  (major, minor + 1, bugfix)
+incrementMinor version =
+  { version | minor = version.minor +1 }
 
-incrementBugfix : Version -> Version
-incrementBugfix (major, minor, bugfix) =
-  (major, minor, bugfix + 1)
+incrementPatch : Version -> Version
+incrementPatch version =
+  { version | patch = version.patch + 1 }
 
 decrementMajor : Version -> Version
-decrementMajor (major, minor, bugfix) =
-  (major - 1, minor, bugfix)
+decrementMajor version =
+  { version | major = version.major - 1 }
 
 decrementMinor : Version -> Version
-decrementMinor (major, minor, bugfix) =
-  (major, minor - 1, bugfix)
+decrementMinor version =
+  { version | minor = version.minor - 1 }
 
-decrementBugfix : Version -> Version
-decrementBugfix (major, minor, bugfix) =
-  (major, minor, bugfix - 1)
+decrementPatch : Version -> Version
+decrementPatch version =
+  { version | patch = version.patch - 1 }
 
 dropMinor : Version -> Version
-dropMinor (major, _, bugfix) =
-  (major, 0, bugfix)
+dropMinor version =
+  { version | minor = 0 }
 
-dropBugfix : Version -> Version
-dropBugfix (major, minor, _) =
-  (major, minor, 0)
+dropPatch : Version -> Version
+dropPatch version =
+  { version | patch = 0 }
