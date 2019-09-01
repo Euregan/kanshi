@@ -17,7 +17,6 @@ import Data.Config.Application as Config
 import Data.Application.Package exposing (Package)
 import Data.Application.Standalone exposing (Standalone)
 import Page.Dashboard as Dashboard
-import Data.Application as Application exposing (Application)
 import Page.Package as Package
 import Page.Standalone as Standalone
 import Page.NotFound as NotFound
@@ -70,7 +69,7 @@ view model =
         Page.Package id ->
           case Dict.get id model.packages of
             Nothing -> NotFound.view
-            Just package -> Package.view package model.time
+            Just package -> Package.view package model.time (Dict.values model.packages)
         Page.Standalone id ->
           case Dict.get id model.standalones of
             Nothing -> NotFound.view

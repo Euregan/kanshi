@@ -1,31 +1,25 @@
-module Data.Application exposing (Application(..), decoder, name, id)
+module Data.Application exposing (packages)
 
-import Json.Decode as Decode exposing (field, string, list)
-import Data.Application.Package as Package exposing (Package)
-import Data.Application.Standalone as Standalone exposing (Standalone)
+import Dict exposing (Dict)
+import Data.Resource exposing (Resource(..))
+import Data.Application.Package exposing (Package)
+import Data.Config.Application as Config
+import Data.Version as Version exposing (Version)
+import Data.Dependency as Dependency exposing (Dependency)
 
 
-type Application
-  = Package Package
-  | Standalone Standalone
-
-decoder : Decode.Decoder Application
-decoder =
-  (field "type" string) |> Decode.andThen (\str ->
-    case str of
-      "stand-alone" -> Standalone.decoder |> Decode.map (\application -> Standalone application)
-      "package" -> Package.decoder |> Decode.map (\application -> Package application)
-      somethingElse -> Decode.fail <| "Type d'application inconnu : " ++ somethingElse
-  )
-
-name : Application -> String
-name application =
-  case application of
-    Standalone standalone -> standalone.name
-    Package package -> package.name
-
-id : Application -> String
-id application =
-  case application of
-    Standalone standalone -> standalone.id
-    Package package -> package.id
+packages : Dict String (Version, Dependency) -> List Package -> List (String, Version, (Version, Dependency))
+packages dependencies existing =
+  let
+    findPackage name =
+        List.filter (\package -> package.publicationName == name) existing |>
+        List.head
+  in
+    Dict.toList dependencies |>
+      List.foldl (\(package, dependency) acc ->
+        case findPackage package
+          |> Maybe.andThen (\pack -> List.head pack.versions)
+          |> Maybe.andThen Version.fromString of
+          Nothing -> acc
+          Just version -> (package, version, dependency) :: acc
+        ) []

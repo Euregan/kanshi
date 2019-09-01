@@ -146,17 +146,20 @@ body {
   padding: 1rem;
 }
 
-.standalone-packages {
+.standalone-packages,
+.package-packages {
   margin-left: 0;
   margin-bottom: 0;
 }
 
-.standalone-packages li {
+.standalone-packages li,
+.package-packages li {
   display: flex;
   justify-content: space-between;
 }
 
-.standalone-packages li span ~ span {
+.standalone-packages li span ~ span,
+.package-packages li span ~ span {
   margin-left: 1rem;
 }
 

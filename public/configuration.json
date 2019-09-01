@@ -17,6 +17,10 @@
         {
             "id": "login-form",
             "name": "Login Form"
+        },
+        {
+            "id": "api-caller",
+            "name": "API Caller"
         }
     ]
 }

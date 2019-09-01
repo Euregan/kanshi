@@ -19,6 +19,6 @@ view packages standalones time =
     [ h4 [] [ text "Standalones" ]
     , div [ class "applications" ] <| List.map (\application -> Standalone.item application time packages) standalones
     , h4 [] [ text "Packages"]
-    , div [ class "applications" ] <| List.map (\application -> Package.item application time) packages
+    , div [ class "applications" ] <| List.map (\application -> Package.item application time packages) packages
     ]
   )

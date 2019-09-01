@@ -19,6 +19,7 @@ import Data.Time exposing (Time, yesterday, weekdayNumber)
 import Time exposing (Posix, posixToMillis, millisToPosix)
 import Data.Dependency as Dependency exposing (Dependency)
 import Data.Version as Version exposing (Version)
+import Data.Application as Application
 
 
 item : Resource Config.Application Standalone -> Time -> List (Resource Config.Application Package) -> Html msg
@@ -31,26 +32,12 @@ item application time packages =
 summary : Time -> List (Resource Config.Application Package) -> Standalone -> List (Html msg)
 summary time packages standalone =
   let
-    packageIdentifiers =
-      List.foldr (\resource acc -> case resource of
-        Fetching _ -> acc
-        Failed _ _ -> acc
-        Succeeded _ package -> package.publicationName :: acc
-      ) [] packages
-    findPackage name =
-      List.foldr (\resource acc -> case resource of
-        Succeeded _ package -> package :: acc
-        _ -> acc
-      ) [] packages |>
-        List.filter (\package -> package.publicationName == name) |>
-        List.head
     filteredPackages =
-      Dict.toList standalone.packages |>
-        List.foldl (\(package, dependency) acc ->
-          case findPackage package |> Maybe.andThen (\pack -> List.head pack.versions) |> Maybe.andThen Version.fromString of
-            Nothing -> acc
-            Just version -> (package, version, dependency) :: acc
-          ) []
+      Application.packages standalone.packages <|
+        List.foldr (\resource acc -> case resource of
+          Succeeded _ package -> package :: acc
+          _ -> acc
+        ) [] packages
   in
     [ li [] [ Application.build (List.head standalone.builds) time ]
     , li [] [ Application.deployment (List.head standalone.deployments) time ]

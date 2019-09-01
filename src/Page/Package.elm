@@ -11,8 +11,8 @@ import Data.Config.Application exposing (Application)
 import Data.Time exposing (Time)
 
 
-view : Resource Application Package -> Time -> ( Maybe String, Html msg )
-view application time =
+view : Resource Application Package -> Time -> List (Resource Application Package) -> ( Maybe String, Html msg )
+view application time packages =
   let
     title =
       case application of
@@ -21,5 +21,5 @@ view application time =
         Succeeded metadata _ -> metadata.name
   in
     ( Just title
-    , div [ id "application" ] [ Package.full time application ]
+    , div [ id "application" ] [ Package.full time packages application ]
     )
