@@ -38,21 +38,21 @@ npm run serve
 
 This is where the whole app is bootstrapped. It contains every standard part of an Elm app:
 
-#### The model - ` Model` 
+#### The model - `Model`
 
 The model holds every basic piece of information necessary to run the app.
 
-#### The message - ` Msg`
+#### The message - `Msg`
 
 The messages of every action of the app. Since everything is handled here, there is no mapping to the pages' sub actions.
 
-#### The view - ` view` 
+#### The view - `view`
 
 This is the function that computes a view for a given model. It basically calls the ` view` function of the page on display, and wraps its return in the site scaffold.
 
 #### The initialization - `init`
 
-This is the function called once, when the application starts. It initializes the model, and calls the api to get the standalones and packages information. It also starts the timer used to refresh the duration every seconds.
+This is the function called when the application starts. It initializes the model, and calls the api to get the standalones and packages information. It also starts a timed callback ticking every second.
 
 #### The update - `update`
 
@@ -65,4 +65,3 @@ This is a module listing every page of the site, also providing `layout`, a func
 ### Route
 
 This module is responsible of listing, parsing and creating links of every route of the site.
-

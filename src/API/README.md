@@ -1,3 +1,3 @@
 # API folder
 
-This folder contains every calls made to the API.
+This folder contains every call made to the API.
