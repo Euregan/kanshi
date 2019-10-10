@@ -64,4 +64,4 @@ This is a module listing every page of the site, also providing `layout`, a func
 
 ### Route
 
-This module is responsible of listing, parsing and creating links of every route of the site.
+This module is responsible for listing, parsing and creating links to every route of the site.
