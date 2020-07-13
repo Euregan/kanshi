@@ -1,4 +1,4 @@
-# Root source folder
+# Root client source folder
 
 ## Setting up
 

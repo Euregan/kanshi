@@ -3,3 +3,5 @@ elm-stuff
 
 public/js/app.js
 src/main.js
+
+.env
