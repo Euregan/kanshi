@@ -1,3 +1,5 @@
 elm-stuff
 public
 .travis.yml
+dev
+.env

@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "elm": "^0.19.0-no-deps"
+    "dotenv": "^8.2.0",
+    "elm": "^0.19.0-no-deps",
+    "express": "^4.17.1",
+    "mustache-express": "^1.3.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.5.4",
@@ -12,9 +15,9 @@
     "nodemon": "^1.19.1"
   },
   "scripts": {
-    "build:dev": "elm make --output public/js/app.js src/Main.elm --debug",
-    "watch": "nodemon --watch src --ext elm --exec \"clear && npm run build:dev\"",
-    "serve": "http-server -c-1"
+    "client:build:dev": "elm make --output public/js/app.js client/Main.elm --debug",
+    "client:watch": "nodemon --watch client --ext elm --exec \"clear && npm run client:build:dev\"",
+    "server:watch": "nodemon --watch server --watch dev server/dev.js"
   },
   "author": "Valentin Manceaux-Panot",
   "license": "ISC",
