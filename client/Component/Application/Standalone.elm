@@ -14,6 +14,7 @@ import Component.Deployment as Deployment
 import Component.Application as Application
 import Component.Time as Time
 import Component.Dependency as Dependency
+import Component.Profile as Profile
 import Route
 import Data.Time exposing (Time, yesterday, weekdayNumber)
 import Time exposing (Posix, posixToMillis, millisToPosix)
@@ -55,9 +56,10 @@ full time packages application =
   Application.full
     application
     (\standalone ->
-      [ div [ class "column col-4" ] [ Application.summary <| List.concat [summary time packages standalone, [timeline time standalone]] ]
-      , div [ class "column col-4" ] [ Build.card standalone.builds time ]
-      , div [ class "column col-4" ] [ Deployment.card standalone.deployments time ]
+      [ div [ class "column col-3" ] [ Application.summary <| List.concat [summary time packages standalone, [timeline time standalone]] ]
+      , div [ class "column col-3" ] [ Profile.card <| Maybe.withDefault Dict.empty <| Maybe.andThen .profiles <| List.head standalone.builds ]
+      , div [ class "column col-3" ] [ Build.card standalone.builds time ]
+      , div [ class "column col-3" ] [ Deployment.card standalone.deployments time ]
       ]
     )
 

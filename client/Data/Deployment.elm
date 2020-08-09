@@ -1,8 +1,8 @@
 module Data.Deployment exposing (Deployment, decoder)
 
 import Json.Decode as Decode exposing (field, int, string, nullable)
-import Data.TaskStatus exposing (TaskStatus(..))
 import Time exposing (Posix, millisToPosix)
+import Data.TaskStatus exposing (TaskStatus(..))
 
 
 type alias Deployment =
@@ -20,7 +20,7 @@ stateDecoder =
         "SUCCESS" -> Decode.succeed Succeeded
         "FAILED" -> Decode.succeed Failed
         "UNKNOWN" -> Decode.succeed Running
-        somethingElse -> Decode.fail <| "État de build inconnu: " ++ somethingElse
+        somethingElse -> Decode.fail <| "Unknown build state: " ++ somethingElse
     )
 
 decoder : Decode.Decoder Deployment

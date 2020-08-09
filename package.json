@@ -16,7 +16,7 @@
     "prettier": "^2.0.5"
   },
   "scripts": {
-    "client:build:dev": "elm make --output public/js/app.js client/Main.elm --debug",
+    "client:build:dev": "elm make --output public/js/app.js client/Main.elm",
     "client:watch": "nodemon --watch client --ext elm --exec \"clear && npm run client:build:dev\"",
     "server:watch": "nodemon --watch server --watch dev server/dev.js"
   },

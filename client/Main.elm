@@ -191,6 +191,10 @@ routeToPage route packages standalones =
       Page.Package id
     Just (Route.Standalone id) ->
       Page.Standalone id
+    -- Just (Route.PackageProfile application profile) ->
+    --   Page.Profile application profile
+    -- Just (Route.StandaloneProfile application profile) ->
+    --   Page.Profile application profile
     Just Route.Deployments ->
       Page.Deployments
 

@@ -1,3 +1,48 @@
+const profile = require('./webpack-profile.json')
+
+const objectToArray = (object) => Object.values(object)
+
+const childrenToArray = (folder) => ({
+  ...folder,
+  children: objectToArray(folder.children).map(childrenToArray)
+})
+
+const profileToFormattedModules = (profile) => {
+  const simplifiedModules = (profile.children ? profile.children[0] : profile).modules
+    .map((module) => ({
+      id: module.id,
+      size: module.size,
+      path: module.name
+    }))
+    .filter(({ path }) => path[0] === '.')
+
+  let fileTree = { name: 'root', value: 0, children: {} }
+  simplifiedModules.forEach((module) => {
+    const path = module.path.split('/').slice(1)
+
+    fileTree.size += module.size
+
+    let localTree = fileTree
+    path.forEach((file, index) => {
+      localTree.children[file] = localTree.children[file] || { name: file, size: 0, children: {} }
+      localTree.children[file].size += module.size
+      localTree = localTree.children[file]
+    })
+  })
+
+  return childrenToArray(fileTree).children
+}
+
+const profileToFormattedAssets = (profile) =>
+  (profile.children ? profile.children[0] : profile).assets.map((asset) => ({
+    name: asset.name,
+    type: asset.type,
+    chunks: asset.chunks,
+    size: asset.size
+  }))
+
+const profileToTime = (profile) => (profile.children ? profile.children[0] : profile).time
+
 module.exports = [
   {
     id: 'blog',
@@ -221,7 +266,14 @@ module.exports = [
             id: '25',
             state: 'Successful',
             number: 25,
-            url: null
+            url: null,
+            profiles: {
+              webpack: {
+                time: profileToTime(profile),
+                assets: profileToFormattedAssets(profile),
+                modules: profileToFormattedModules(profile)
+              }
+            }
           },
           {
             id: '24',

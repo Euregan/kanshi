@@ -14,6 +14,8 @@ type Route
   | Package String
   | Standalone String
   | Deployments
+  -- | PackageProfile String String
+  -- | StandaloneProfile String String
 
 parser : Parser (Route -> a) a
 parser =
@@ -21,6 +23,8 @@ parser =
     [ Parser.map Root Parser.top
     , Parser.map Package (s "package" </> string)
     , Parser.map Standalone (s "standalone" </> string)
+    -- , Parser.map PackageProfile (s "package" </> string </> s "profile" </> string)
+    -- , Parser.map StandaloneProfile (s "standalone" </> string </> s "profile" </> string)
     , Parser.map Deployments (s "deployments")
     ]
 
@@ -48,6 +52,8 @@ routeToString page =
         Root -> []
         Package name -> [ "package", name ]
         Standalone name -> [ "standalone", name ]
+        -- PackageProfile name profile -> [ "package", name, "profile", profile]
+        -- StandaloneProfile name profile -> [ "standalone", name, "profile", profile ]
         Deployments -> [ "deployments" ]
     in
       "/" ++ String.join "/" pieces

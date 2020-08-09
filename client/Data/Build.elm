@@ -1,7 +1,9 @@
 module Data.Build exposing (Build, decoder)
 
-import Json.Decode as Decode exposing (field, string, int, nullable)
+import Json.Decode as Decode exposing (field, string, int, nullable, dict, maybe)
+import Dict exposing (Dict)
 import Data.TaskStatus exposing (TaskStatus(..))
+import Data.Profile as Profile exposing (Profile)
 
 
 type alias Build =
@@ -9,6 +11,7 @@ type alias Build =
   , state : TaskStatus
   , number : Int
   , url : Maybe String
+  , profiles: Maybe (Dict String Profile)
   }
 
 stateDecoder : Decode.Decoder TaskStatus
@@ -25,8 +28,9 @@ stateDecoder =
 
 decoder : Decode.Decoder Build
 decoder =
-  Decode.map4 Build
+  Decode.map5 Build
     (field "id" string)
     (field "state" stateDecoder)
     (field "number" int)
     (field "url" (nullable string))
+    (maybe <| field "profiles" (dict Profile.decoder))
