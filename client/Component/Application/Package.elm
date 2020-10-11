@@ -44,6 +44,11 @@ summary time packages package =
         [ h6 [] [ text "Packages" ]
         , ul [ class "package-packages" ] <| List.map (\(pack, ver, dependency) -> Dependency.item False pack ver dependency) filteredPackages
         ])
+    , (if List.isEmpty package.tags then
+        text ""
+      else
+        li [ class "tags" ] <| List.map (\tag -> span [ class "chip" ] [ text tag ]) package.tags
+      )
     ]
 
 full : Time -> List (Resource Config.Application Package) -> Resource Config.Application Package -> Html msg

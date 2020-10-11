@@ -22,6 +22,9 @@ module.exports = (_, config) => {
   if (config.packages) {
     provider.packagesUsed = () => Promise.resolve(config.packages)
   }
+  if (config.tags) {
+    provider.tags = () => Promise.resolve(config.tags)
+  }
 
   return provider
 }

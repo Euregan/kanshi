@@ -36,6 +36,7 @@ type alias Model =
   , standalones : Dict String (Resource Config.Application Standalone)
   , config : Config
   , pendingConfig : Config
+  , tags : Dict String Bool
   }
 
 type Msg
@@ -48,6 +49,7 @@ type Msg
   | ApplyPendingConfig
   | CancelPendingConfig
   | UpdateAll Posix
+  | ToggleTag String
 
 main =
   Browser.application
@@ -65,7 +67,7 @@ view model =
     (title, content) =
       case model.page of
         Page.NotFound -> NotFound.view
-        Page.Dashboard -> Dashboard.view (Dict.values model.packages) (Dict.values model.standalones) model.time
+        Page.Dashboard -> Dashboard.view (Dict.toList model.tags) (Dict.values model.packages) (Dict.values model.standalones) model.time ToggleTag
         Page.Package id ->
           case Dict.get id model.packages of
             Nothing -> NotFound.view
@@ -95,6 +97,7 @@ init {config} url key =
       , standalones = standalones
       , config = config
       , pendingConfig = config
+      , tags = Dict.empty
       }
     , Cmd.batch <| List.concat
       [ [ Task.perform TimeUpdated now, Task.perform ZoneUpdated here ]
@@ -129,7 +132,10 @@ update message model =
       , Cmd.none
       )
     GotPackage application (Ok package) ->
-      ( { model | packages = Dict.insert application.id (Succeeded application package) model.packages }
+      ( { model
+          | packages = Dict.insert application.id (Succeeded application package) model.packages
+          , tags = Dict.union model.tags (Dict.fromList <| List.map (\label -> (label, True)) package.tags)
+        }
       , Cmd.none
       )
     GotPackage application (Err error) ->
@@ -137,7 +143,10 @@ update message model =
       , Cmd.none
       )
     GotStandalone application (Ok standalone) ->
-      ( { model | standalones = Dict.insert application.id (Succeeded application standalone) model.standalones }
+      ( { model
+          | standalones = Dict.insert application.id (Succeeded application standalone) model.standalones
+          , tags = Dict.union model.tags (Dict.fromList <| List.map (\label -> (label, True)) standalone.tags)
+        }
       , Cmd.none
       )
     GotStandalone application (Err error) ->
@@ -162,6 +171,10 @@ update message model =
         [ fetchPackages model.config.packages
         , fetchStandalones model.config.standalones
         ]
+      )
+    ToggleTag tag ->
+      ( { model | tags = (Dict.insert tag <| not <| Maybe.withDefault False <| Dict.get tag model.tags) model.tags }
+      , Cmd.none
       )
 
 pendStandalones : List Config.Application -> Dict String (Resource Config.Application Standalone)
