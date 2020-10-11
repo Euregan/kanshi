@@ -15,17 +15,19 @@ type alias Standalone =
   , deployments : List Deployment
   , calendar : List Int
   , packages : Dict String (Version, Dependency)
+  , tags : List String
   }
 
 decoder : Decoder Standalone
 decoder =
-  Decode.map6 Standalone
+  Decode.map7 Standalone
     (field "id" string)
     (field "name" string)
     (field "builds" (list Build.decoder))
     (field "deployments" (list Deployment.decoder))
     (field "calendar" (nullable (list int)) |> Decode.map (Maybe.withDefault []))
     (field "packages" (dict <| arrayAsTuple Version.decoder Dependency.decoder))
+    (field "tags" (list string))
 
 arrayAsTuple : Decoder a -> Decoder b -> Decoder (a, b)
 arrayAsTuple a b =

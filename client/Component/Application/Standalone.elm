@@ -48,6 +48,11 @@ summary time packages standalone =
         [ h6 [] [ text "Packages" ]
         , ul [ class "standalone-packages" ] <| List.map (\(package, version, dependency) -> Dependency.item False package version dependency) filteredPackages
         ])
+    , (if List.isEmpty standalone.tags then
+        text ""
+      else
+        li [ class "tags" ] <| List.map (\tag -> span [ class "chip" ] [ text tag ]) standalone.tags
+      )
     ]
 
 full : Time -> List (Resource Config.Application Package) -> Resource Config.Application Standalone -> Html msg

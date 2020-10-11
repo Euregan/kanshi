@@ -35,6 +35,38 @@ body {
 #dashboard .applications ul.card-body {
   margin: 0;
   padding-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+#dashboard .applications .card .tags {
+  margin-top: 1rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  flex-grow: 1;
+}
+
+#dashboard .filters {
+  float: right;
+}
+
+#dashboard .filters .chip {
+  cursor: pointer;
+}
+
+#dashboard .filters:hover .filters-hidden {
+  display: block;
+}
+
+#dashboard .filters .action {
+  float: right;
+}
+
+#dashboard .filters-hidden {
+  padding-top: 0.5rem;
+  clear: both;
+  display: none;
 }
 
 #deployments .card {
@@ -259,4 +291,9 @@ h6 {
 
 h6 ~ ul {
   margin-top: 0;
+}
+
+.chip {
+  padding: .2rem .5rem .3rem .5rem;
+  height: auto;
 }

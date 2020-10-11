@@ -30,7 +30,8 @@ module.exports = (sideEffects, providers) => {
         builds: providers.get(application.builds).builds(),
         deployments: providers.get(application.deployments).deployments(),
         calendar: providers.get(application.deployments).deploymentCalendar(),
-        packages: providers.get(application.source).packagesUsed()
+        packages: providers.get(application.source).packagesUsed(),
+        tags: providers.get(application.tags).tags()
     })
 
     const package = application => partial({
@@ -39,7 +40,8 @@ module.exports = (sideEffects, providers) => {
         publicationName: providers.get(application.package).publicationName(),
         versions: providers.get(application.versions).versions(),
         builds: providers.get(application.builds).builds(),
-        deployments: providers.get(application.deployments).deployments()
+        deployments: providers.get(application.deployments).deployments(),
+        tags: providers.get(application.tags).tags()
     })
 
     return {

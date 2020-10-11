@@ -9,7 +9,8 @@ module.exports = (sideEffects, providers) => {
                 builds: provider.builds ? provider.builds : () => [],
                 deployments: provider.deployments ? provider.deployments : () => [],
                 deploymentCalendar: provider.deploymentCalendar ? provider.deploymentCalendar : () => null,
-                packagesUsed: provider.packagesUsed ? provider.packagesUsed : () => []
+                packagesUsed: provider.packagesUsed ? provider.packagesUsed : () => [],
+                tags: provider.tags ? provider.tags : () => []
             }
         }
     }

@@ -91,6 +91,14 @@ module.exports = [
     source: {
       provider: 'dev',
       configuration: { packages: { '@swag/login-form': ['1.3.8', '^1.3.9'] } }
+    },
+    tags: {
+      provider: 'dev',
+      configuration: {
+        tags: [
+          'python'
+        ]
+      }
     }
   },
   {
@@ -208,6 +216,15 @@ module.exports = [
           '@swag/api-caller': ['2.1.0', '^2.0.0']
         }
       }
+    },
+    tags: {
+      provider: 'dev',
+      configuration: {
+        tags: [
+          'python',
+          'javascript'
+        ]
+      }
     }
   },
   {
@@ -282,6 +299,15 @@ module.exports = [
           '@swag/login-form': ['1.2.9', '1.2.9'],
           '@swag/api-caller': ['2.1.0', '^2.0.0']
         }
+      }
+    },
+    tags: {
+      provider: 'dev',
+      configuration: {
+        tags: [
+          'python',
+          'javascript'
+        ]
       }
     }
   }

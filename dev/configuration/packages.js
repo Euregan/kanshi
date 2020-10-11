@@ -54,6 +54,14 @@ module.exports = [
       configuration: {
         publicationName: '@swag/api-caller'
       }
+    },
+    tags: {
+      provider: 'dev',
+      configuration: {
+        tags: [
+          'javascript'
+        ]
+      }
     }
   },
   {
@@ -112,6 +120,14 @@ module.exports = [
       provider: 'dev',
       configuration: {
         publicationName: '@swag/login-form'
+      }
+    },
+    tags: {
+      provider: 'dev',
+      configuration: {
+        tags: [
+          'python'
+        ]
       }
     }
   }

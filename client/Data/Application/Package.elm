@@ -16,11 +16,12 @@ type alias Package =
   , builds : List Build
   , deployments : List Deployment
   , packages : Maybe (Dict String (Version, Dependency))
+  , tags : List String
   }
 
 decoder : Decoder Package
 decoder =
-  Decode.map7 Package
+  Decode.map8 Package
     (field "id" string)
     (field "publicationName" (nullable string |> Decode.map (Maybe.withDefault "")))
     (field "name" string)
@@ -28,6 +29,7 @@ decoder =
     (field "builds" (list Build.decoder))
     (field "deployments" (list Deployment.decoder))
     (Decode.maybe (field "packages" (dict <| arrayAsTuple Version.decoder Dependency.decoder)))
+    (field "tags" (list string))
 
 arrayAsTuple : Decoder a -> Decoder b -> Decoder (a, b)
 arrayAsTuple a b =
