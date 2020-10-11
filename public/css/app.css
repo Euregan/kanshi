@@ -248,6 +248,10 @@ ul > li:first-child {
   padding: 0;
 }
 
+.card-body .message {
+  max-width: 18rem;
+}
+
 h6 {
   font-weight: bold;
   margin-top: 0.8rem;
