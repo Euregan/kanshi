@@ -21,7 +21,7 @@ item detailed package latest (installed, dependency) =
   in
     case detailed of
       False ->
-        li [ title <| "Locked version: " ++ (Version.toString installed) ]
+        li [ title <| "Locked version: " ++ (Version.toString installed) ++ "\nAvailable version: " ++ (Version.toString latest)]
           [ span [] [ text package ]
           , span [ class colorClass ] [ text dependency.raw ]
           ]
